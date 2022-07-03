@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/wordListFragment">
+
+    <fragment
+        android:id="@+id/wordListFragment"
+        android:name="com.example.ttanslateapp.presentation.word_list.WordListFragment"
+        android:label="WordListFragment"
+        tools:layout="@layout/fragment_word_list">
+        <action
+            android:id="@+id/action_wordListFragment_to_modifyWordFragment"
+            app:destination="@id/modifyWordFragment"
+            app:popUpTo="@id/wordListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/modifyWordFragment"
+        android:name="com.example.ttanslateapp.presentation.modify_word.ModifyWordFragment"
+        android:label="ModifyWordFragment"
+        tools:layout="@layout/fragment_modify_word">
+        <argument
+            android:name="mode"
+            app:argType="com.example.ttanslateapp.presentation.modify_word.ModifyWordModes" />
+        <argument
+            android:name="wordId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/examKnowledgeWordsFragment"
+        android:name="com.example.ttanslateapp.presentation.exam.ExamKnowledgeWordsFragment"
+        android:label="ExamKnowledgeWordsFragment"
+        tools:layout="@layout/fragment_exam_knowledge_words">
+        <action
+            android:id="@+id/action_examKnowledgeWordsFragment_to_modifyWordFragment"
+            app:destination="@id/modifyWordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.ttanslateapp.presentation.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

@@ -1,3 +1,63 @@
 <resources>
-    <string name="app_name">Ttanslate App</string>
+    <!--WordList fragment -->
+    <string name="word_list_empty_dictionary">You don\'t have any words</string>
+    <string name="word_list_add_first_word">Add first word</string>
+    <string name="word_list_nothing_found">Nothing found</string>
+    <string name="word_list_empty_exam_list">You not have saved word in your dictionary, add a few for start exam</string>
+
+    <!--Modify word fragment -->
+    <string name="modify_word_select_translated_language">Select translated language</string>
+    <string name="modify_word_english_word_hint">English word</string>
+    <string name="modify_word_input_translate">Input translate</string>
+    <string name="modify_word_description">description:</string>
+    <string name="modify_word_transcription">word transcription</string>
+    <string name="modify_word_input_hint">Input hint</string>
+    <string name="modify_word_cancel_edit">Cancel edit</string>
+    <string name="modify_word_show_more">Розкрити</string>
+    <string name="modify_word_success_save_word">Word saved successfully</string>
+    <string name="modify_word_invalid_word_value">Invalid Word</string>
+    <string name="modify_word_priority">Priority</string>
+    <string name="modify_word_additional">Additional</string>
+    <string name="modify_word_microphone">Record pronunciation</string>
+    <string name="modify_word_add_new_word">Add new word</string>
+    <string name="modify_word_toolbar_title">Modify word</string>
+
+    <!-- Exam counter-->
+    <string name="exam_counter">%1$d from %2$d</string>
+    <string name="exam_show_hints">show hints</string>
+    <string name="exam_hide_hints">hide hints</string>
+    <string name="exam_show_variants">show variants</string>
+    <string name="exam_hide_variants">hide variants</string>
+    <string name="exam_your_answer">Your answer:</string>
+    <string name="exam_correct_answer">Great, your answer is correct :)</string>
+    <string name="exam_hidden_translate_description">If you think answer is correct you can add this word like "hidden translate". Hidden translate this is special translates which does not visible on main page list, but taken into account on exam.\n\nHidden translates has different background color. You can change hidden status by long tab on translate</string>
+    <string name="exam_show_current_translates">show current translates</string>
+    <string name="exam_hide_current_translates">hide current translates</string>
+
+    <!-- Settings fragment -->
+    <string name="settings_reminder_label">Reminder word exam:</string>
+    <string name="left_before_next_reminder">Left before next reminder:</string>
+
+    <!--Validation -->
+    <string name="validation_required_field">This field is required</string>
+
+    <!--Common -->
+    <string name="app_name">Translate App</string>
+    <string name="save">Save</string>
+    <string name="add">Add</string>
+    <string name="edit">Edit</string>
+    <string name="error_happened">Error happened</string>
+    <string name="audio_has_been_added">audio has been added</string>
+    <string name="next">next</string>
+    <string name="finish">finish</string>
+    <string name="check_answer">check answer</string>
+    <string name="add_audio_success">audio added successfully</string>
+    <string name="word_translate">word translate</string>
+    <string name="play_sound">Play sound</string>
+    <string name="field_is_required">This field is required</string>
+
+    <string-array name="translate_from_language">
+        <item>UA</item>
+    </string-array>
+
 </resources>

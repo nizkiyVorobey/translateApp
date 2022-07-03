@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/stroke"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/prev_next_exam_button"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/word_position"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/shape_circle"
+            android:backgroundTint="@color/green"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@id/stroke"
+            app:layout_constraintEnd_toEndOf="@id/stroke"
+            app:layout_constraintStart_toStartOf="@id/stroke"
+            app:layout_constraintTop_toTopOf="@id/stroke"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/word_position_dots"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:fontFamily="monospace"
+            android:includeFontPadding="false"
+            android:text="......."
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/word_position"
+            app:layout_constraintStart_toEndOf="@+id/word_position"
+            app:layout_constraintTop_toTopOf="@+id/word_position" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
