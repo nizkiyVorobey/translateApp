@@ -1,30 +1,17 @@
 package com.example.ttanslateapp.presentation.word_list
 
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.widget.SearchView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
-import com.example.ttanslateapp.R
 import com.example.ttanslateapp.databinding.FragmentWordListBinding
 import com.example.ttanslateapp.presentation.core.BaseFragment
 import com.example.ttanslateapp.presentation.core.BindingInflater
-import com.example.ttanslateapp.presentation.exam.ExamKnowledgeWordsFragment
-import com.example.ttanslateapp.presentation.modify_word.ModifyWordFragment
 import com.example.ttanslateapp.presentation.modify_word.ModifyWordModes
 import com.example.ttanslateapp.presentation.word_list.adapter.WordListAdapter
 import com.example.ttanslateapp.util.getAppComponent
-import com.google.android.material.appbar.MaterialToolbar
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import timber.log.Timber
+
 
 class WordListFragment : BaseFragment<FragmentWordListBinding>() {
 
@@ -42,26 +29,23 @@ class WordListFragment : BaseFragment<FragmentWordListBinding>() {
         super.onViewCreated(view, savedInstanceState)
         getAppComponent().inject(this)
 
+//        But we want restore ui on rotate and go over from fragment
+        viewModel.restoreUI()
+
         setAdapter()
         clickListeners()
         observeData()
 
-        binding.searchWord.setOnQueryTextFocusChangeListener { v, hasFocus ->
-            viewModel.searchInputHasFocus = hasFocus
-        }
-
         binding.searchWord.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                Timber.d(query.toString())
-                return true
-            }
+            override fun onQueryTextSubmit(query: String?): Boolean = true
 
             override fun onQueryTextChange(query: String?): Boolean {
-                if (viewModel.searchInputHasFocus) {
+                if (viewModel.searchInputValue != query.toString()) {
+                    viewModel.searchInputValue = query.toString()
+                    Timber.d("onQueryTextChange")
                     viewModel.searchDebounced(query.toString())
                 }
-
                 return true
             }
         })
@@ -71,9 +55,12 @@ class WordListFragment : BaseFragment<FragmentWordListBinding>() {
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
                 is WordListViewModelState.IsLoading -> {
-
+                    progressBar.visibility = View.VISIBLE
                 }
                 is WordListViewModelState.LoadSuccess -> {
+                    Timber.d("uiState: LoadSuccess")
+
+                    progressBar.visibility = View.GONE
                     if (uiState.wordList.isEmpty()) {
                         nothingFoundContainer.root.visibility = View.VISIBLE
                         wordListRv.visibility = View.GONE
@@ -83,16 +70,44 @@ class WordListFragment : BaseFragment<FragmentWordListBinding>() {
                     }
 
                     if (uiState.dictionaryIsEmpty) {
-                        emptyListContainer.root.visibility = View.VISIBLE
+                        emptyListContainer.visibility = View.VISIBLE
                         wordListContainer.visibility = View.GONE
                     } else {
-                        emptyListContainer.root.visibility = View.GONE
+                        emptyListContainer.visibility = View.GONE
                         wordListContainer.visibility = View.VISIBLE
                     }
 
                     wordListAdapter.submitList(uiState.wordList) {
                         binding.wordListRv.scrollToPosition(0)
                     }
+                }
+                is WordListViewModelState.LoadedNewPage -> {
+                    Timber.d("uiState: LoadedNewPage")
+                    wordListAdapter.submitList(uiState.wordList) {
+//                        binding.wordListRv.scrollToPosition(0)
+                    }
+                }
+                is WordListViewModelState.RestoreUI -> {
+                    Timber.d("uiState: RestoreUI")
+
+                    progressBar.visibility = View.GONE
+                    if (uiState.wordList.isEmpty()) {
+                        nothingFoundContainer.root.visibility = View.VISIBLE
+                        wordListRv.visibility = View.GONE
+                    } else {
+                        nothingFoundContainer.root.visibility = View.GONE
+                        wordListRv.visibility = View.VISIBLE
+                    }
+
+                    if (uiState.dictionaryIsEmpty) {
+                        emptyListContainer.visibility = View.VISIBLE
+                        wordListContainer.visibility = View.GONE
+                    } else {
+                        emptyListContainer.visibility = View.GONE
+                        wordListContainer.visibility = View.VISIBLE
+                    }
+
+                    wordListAdapter.submitList(uiState.wordList)
                 }
             }
         }
@@ -101,7 +116,7 @@ class WordListFragment : BaseFragment<FragmentWordListBinding>() {
     private fun clickListeners() = with(binding) {
         searchWord.setOnClickListener { searchWord.isIconified = false }
         addNewWord.setOnClickListener { launchAddWordScreen() }
-        emptyListContainer.addFirstWord.setOnClickListener { launchAddWordScreen() }
+        emptyListLayout.addFirstWord.setOnClickListener { launchAddWordScreen() }
 
         wordListAdapter.onClickListener = object : WordListAdapter.OnClickListener {
             override fun onRootClickListener(wordId: Long) {
@@ -128,27 +143,14 @@ class WordListFragment : BaseFragment<FragmentWordListBinding>() {
     private fun setAdapter() {
         binding.wordListRv.itemAnimator = null
 
+        wordListAdapter.handleLoadNewWords = object : WordListAdapter.HandleLoadNewWords {
+            override fun onLoadNewWords(position: Int) {
+                viewModel.loadNewPage(position)
+            }
+
+        }
         wordListAdapter
             .apply { binding.wordListRv.adapter = this }
 
-        val callback = object :
-            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val item = wordListAdapter.currentList[viewHolder.adapterPosition]
-                viewModel.deleteWordById(item.id)
-            }
-        }
-
-        val itemTouchHelper = ItemTouchHelper(callback)
-        itemTouchHelper.attachToRecyclerView(binding.wordListRv)
     }
-
 }

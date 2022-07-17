@@ -2,7 +2,6 @@ package com.example.ttanslateapp.util
 
 import com.example.ttanslateapp.util.PushFrequency.Companion.DEFAULT_HOURS
 import com.example.ttanslateapp.util.PushFrequency.Companion.DEFAULT_MINUTES
-import timber.log.Timber
 import java.util.*
 
 class PushFrequency {
@@ -11,11 +10,6 @@ class PushFrequency {
         const val ONCE_AT_DAY = 86_400_000 // 0
         const val ONCE_AT_THREE_DAYS = 259_200_000 // 86_400_000 * 2
         const val ONCE_AT_SIX_DAYS = 518_400_000 // 86_400_000 * 5
-
-//        const val NONE = 0
-//        const val ONCE_AT_DAY = 20_000 // 10 sec
-//        const val ONCE_AT_THREE_DAYS = 35_000 // 15 sec
-//        const val ONCE_AT_SIX_DAYS = 45_000 //30 sec
 
         const val DEFAULT_HOURS = 10
         const val DEFAULT_MINUTES = 0
@@ -38,12 +32,8 @@ fun getExamReminderDelayFromNow(
     dueDate.add(Calendar.MILLISECOND, frequencyDelay)
 
     if (dueDate.before(currentDate)) {
-        Timber.tag("getExamReminderDelayFromNow").d("LESS")
         dueDate.add(Calendar.HOUR_OF_DAY, 24)
     }
-
-    Timber.tag("getExamReminderDelayFromNow").d("NOW ${Calendar.getInstance().timeInMillis}")
-    Timber.tag("getExamReminderDelayFromNow").d("dueDate ${dueDate.timeInMillis}")
 
     return dueDate.timeInMillis
 

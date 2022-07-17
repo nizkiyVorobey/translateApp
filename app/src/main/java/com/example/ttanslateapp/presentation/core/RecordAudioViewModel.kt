@@ -7,12 +7,12 @@ import android.media.MediaRecorder
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.ttanslateapp.util.generateFileName
 import com.example.ttanslateapp.util.getAudioPath
-import timber.log.Timber
 import java.io.File
 import java.io.IOException
 
@@ -20,14 +20,12 @@ class RecordAudioViewModel(private val applicationContext: Application) :
     AndroidViewModel(applicationContext) {
     private var modifiedFileName: String? = null
     private var word: String? = null
+    private val TAG = "RecordAudioViewModel"
 
     val fileName by lazy { modifiedFileName ?: generateFileName() }
     private val audioPath by lazy { getAudioPath(applicationContext, fileName) }
 
     private var recorder: MediaRecorder? = null
-
-//    private val _player = MutableLiveData<MediaPlayer?>(null)
-//    val player: LiveData<MediaPlayer?> = _player
 
     // FIXME
     var _player: MediaPlayer? = null
@@ -39,7 +37,7 @@ class RecordAudioViewModel(private val applicationContext: Application) :
     private val _isRecording = MutableLiveData<Boolean>()
     val isRecording: LiveData<Boolean> = _isRecording
 
-    private val _isPlaying= MutableLiveData<Boolean>()
+    private val _isPlaying = MutableLiveData<Boolean>()
     val isPlaying: LiveData<Boolean> = _isPlaying
 
     var fileRecordedBuNotSaved = false
@@ -61,7 +59,7 @@ class RecordAudioViewModel(private val applicationContext: Application) :
                 setDataSource(audioPath)
                 prepare()
             } catch (e: IOException) {
-                Timber.e("prepare() failed $e")
+                Log.e(TAG, "prepare() failed $e")
             }
         }
     }
@@ -84,10 +82,12 @@ class RecordAudioViewModel(private val applicationContext: Application) :
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     VibrationEffect.createOneShot(100L, VibrationEffect.DEFAULT_AMPLITUDE)
                 } else {
-                    (applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator).vibrate(100)
+                    (applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator).vibrate(
+                        100
+                    )
                 }
             } catch (e: IOException) {
-                Timber.e("prepare() failed: $e")
+                Log.e(TAG, "prepare() failed: $e")
             }
         }
     }
@@ -104,7 +104,7 @@ class RecordAudioViewModel(private val applicationContext: Application) :
             _isRecordExist.value = true
             fileRecordedBuNotSaved = true
         } catch (e: Exception) {
-            Timber.e("Error endRecording $e")
+            Log.e(TAG, "Error endRecording $e")
             recorder = null
             deleteRecording()
         }
@@ -116,9 +116,8 @@ class RecordAudioViewModel(private val applicationContext: Application) :
             _isRecordExist.value = false
             deleteAudioFile()
             fileRecordedBuNotSaved = false
-            Timber.d("Deletion succeeded.")
         } catch (e: Exception) {
-            Timber.d("Deletion failed. $e")
+            Log.e(TAG, "Deletion failed. $e")
         }
     }
 
@@ -148,19 +147,16 @@ class RecordAudioViewModel(private val applicationContext: Application) :
 
     override fun onCleared() {
         super.onCleared()
-        Timber.d("onCleared")
         clearRecording()
         if (fileRecordedBuNotSaved) {
             deleteRecording()
-            if ( modifiedFileName!= null) {
+            if (modifiedFileName != null) {
                 callbackListener?.deleteRecordingButNotSaveAudio()
             }
         }
     }
 
-
     interface CallbackListener {
         fun deleteRecordingButNotSaveAudio()
     }
-
 }

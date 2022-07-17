@@ -2,6 +2,8 @@ package com.example.ttanslateapp.di
 
 import android.app.Application
 import com.example.ttanslateapp.data.database.*
+import com.example.ttanslateapp.data.in_memory_storage.InMemoryStorage
+import com.example.ttanslateapp.data.in_memory_storage.LocalCache
 import com.example.ttanslateapp.domain.ExamWordAnswerRepository
 import com.example.ttanslateapp.domain.TranslatedWordRepository
 import dagger.Binds
@@ -32,5 +34,7 @@ interface DataModule {
             return AppDatabase.getInstance(context).examWordAnswerDao()
         }
 
+        @Provides
+        fun providesInMemoryStorage(): InMemoryStorage = LocalCache()
     }
 }

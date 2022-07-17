@@ -27,6 +27,10 @@
             android:name="wordId"
             android:defaultValue="-1L"
             app:argType="long" />
+        <argument
+            android:name="wordValue"
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
     <fragment
         android:id="@+id/examKnowledgeWordsFragment"

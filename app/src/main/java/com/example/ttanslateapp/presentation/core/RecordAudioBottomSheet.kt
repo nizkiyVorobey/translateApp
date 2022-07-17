@@ -13,7 +13,6 @@ import com.example.ttanslateapp.R
 import com.example.ttanslateapp.databinding.ViewRecordAudioBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import timber.log.Timber
 
 
 class RecordAudioBottomSheet : BottomSheetDialogFragment() {
@@ -69,7 +68,6 @@ class RecordAudioBottomSheet : BottomSheetDialogFragment() {
 
     private fun setupListeners() = with(binding) {
         viewModel.isRecordExist.observe(viewLifecycleOwner) {
-            Timber.d("isRecordExist ${it}")
             if (it) {
                 recordingChronometer.isCountDown = true
                 resetChronometer()
@@ -168,7 +166,6 @@ class RecordAudioBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun saveRecording() {
-        Timber.d("viewModel.fileName ${viewModel.fileName}")
         viewModel.fileRecordedBuNotSaved = false
         callbackListener?.saveAudio(viewModel.fileName)
         this.dismiss()

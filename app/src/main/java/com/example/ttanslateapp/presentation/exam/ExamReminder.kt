@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.ttanslateapp.data.workers.AlarmReceiver
 import com.example.ttanslateapp.util.*
 import com.google.gson.Gson
-import timber.log.Timber
 import javax.inject.Inject
 
 data class ReminderTime(
@@ -49,7 +48,6 @@ class ExamReminder @Inject constructor(private val application: Application) {
             application.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
         val intent = AlarmReceiver.newIntent(application)
 
-        Timber.d("delay: ${delay}")
         val pendingIntent =
             PendingIntent.getBroadcast(application, 100, intent, PendingIntent.FLAG_IMMUTABLE)
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, delay, pendingIntent)
@@ -57,7 +55,6 @@ class ExamReminder @Inject constructor(private val application: Application) {
 
 
     fun resetReminder() {
-        Timber.d("resetReminder")
         sharedPref.edit().apply {
             putInt(EXAM_REMINDER_FREQUENCY, PushFrequency.NONE)
             remove(LEFT_BEFORE_NOTIFICATION)
@@ -86,9 +83,6 @@ class ExamReminder @Inject constructor(private val application: Application) {
                 hours = time.hours,
                 minutes = time.minutes
             )
-        Timber.d("frequency: ${frequency}")
-        Timber.d("time: ${time}")
-        Timber.d("delay: ${delay}")
 
         sharedPref.edit().apply {
             putLong(LEFT_BEFORE_NOTIFICATION, delay)
@@ -101,8 +95,6 @@ class ExamReminder @Inject constructor(private val application: Application) {
     fun setInitialReminderIfNeeded() {
         val examNotificationEnabled =
             sharedPref.getBoolean(EXAM_NOTIFICATION_ENABLED, false)
-
-        Timber.d("examNotificationEnabled: ${examNotificationEnabled}")
 
         if (!examNotificationEnabled) {
             sharedPref.edit().apply {

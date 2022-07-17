@@ -25,7 +25,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="?attr/homeAsUpIndicator"
                 app:title="@string/modify_word_toolbar_title"
-                app:titleCentered="true" />
+                app:titleCentered="true">
+
+                <ImageButton
+                    android:id="@+id/delete_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="@dimen/gutter"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/delete_active"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+            </com.google.android.material.appbar.MaterialToolbar>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

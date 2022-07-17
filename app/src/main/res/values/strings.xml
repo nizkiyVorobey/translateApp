@@ -1,6 +1,6 @@
 <resources>
     <!--WordList fragment -->
-    <string name="word_list_empty_dictionary">You don\'t have any words</string>
+    <string name="word_list_empty_dictionary">You don\'t have any word</string>
     <string name="word_list_add_first_word">Add first word</string>
     <string name="word_list_nothing_found">Nothing found</string>
     <string name="word_list_empty_exam_list">You not have saved word in your dictionary, add a few for start exam</string>
@@ -15,14 +15,20 @@
     <string name="modify_word_cancel_edit">Cancel edit</string>
     <string name="modify_word_show_more">Розкрити</string>
     <string name="modify_word_success_save_word">Word saved successfully</string>
+    <string name="modify_word_success_delete_word">Word was deleted</string>
     <string name="modify_word_invalid_word_value">Invalid Word</string>
     <string name="modify_word_priority">Priority</string>
     <string name="modify_word_additional">Additional</string>
     <string name="modify_word_microphone">Record pronunciation</string>
     <string name="modify_word_add_new_word">Add new word</string>
     <string name="modify_word_toolbar_title">Modify word</string>
+    <string name="modify_word_confirm_delete_title">Are you sure you want to delete this word?</string>
+    <string name="modify_word_enable_audio_permission">Your audio permission is disabled, please, go to settings and enable one</string>
+
 
     <!-- Exam counter-->
+    <string name="exam_counter_toolbar_title_daily_mode">Daily exam</string>
+    <string name="exam_counter_toolbar_title_infinity_mode">Infinity exam</string>
     <string name="exam_counter">%1$d from %2$d</string>
     <string name="exam_show_hints">show hints</string>
     <string name="exam_hide_hints">hide hints</string>
@@ -33,6 +39,10 @@
     <string name="exam_hidden_translate_description">If you think answer is correct you can add this word like "hidden translate". Hidden translate this is special translates which does not visible on main page list, but taken into account on exam.\n\nHidden translates has different background color. You can change hidden status by long tab on translate</string>
     <string name="exam_show_current_translates">show current translates</string>
     <string name="exam_hide_current_translates">hide current translates</string>
+    <string name="exam_complete_daily_exam">Congratulations, you complete daily exam</string>
+    <string name="exam_complete_infinity_exam">Congratulations, you complete infinity exam</string>
+
+
 
     <!-- Settings fragment -->
     <string name="settings_reminder_label">Reminder word exam:</string>
@@ -46,6 +56,8 @@
     <string name="save">Save</string>
     <string name="add">Add</string>
     <string name="edit">Edit</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="error_happened">Error happened</string>
     <string name="audio_has_been_added">audio has been added</string>
     <string name="next">next</string>

@@ -1,7 +1,6 @@
 package com.example.ttanslateapp.presentation.word_list.adapter
 
 import android.media.MediaPlayer
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.content.res.AppCompatResources
@@ -110,7 +109,6 @@ class WordItemViewHolder(
         if (playingList[word.id] == true) {
             playSound.background =
                 AppCompatResources.getDrawable(playSound.context, R.drawable.volume_up_active)
-
         } else {
             if (word.sound?.fileName != null) {
                 playSound.background =
@@ -119,8 +117,7 @@ class WordItemViewHolder(
                         R.drawable.volume_up_available
                     )
             } else {
-                playSound.background =
-                    AppCompatResources.getDrawable(playSound.context, R.drawable.volume_up_inactive)
+                playSound.background = null
             }
         }
 

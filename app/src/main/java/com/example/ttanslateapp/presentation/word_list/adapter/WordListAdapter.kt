@@ -9,11 +9,11 @@ import com.example.ttanslateapp.domain.model.WordRV
 
 class WordListAdapter : ListAdapter<WordRV, WordItemViewHolder>(WordListAdapterDiffCallback()) {
     var onClickListener: OnClickListener? = null
+    var handleLoadNewWords: HandleLoadNewWords? = null
+
     private val player = MediaPlayer()
     private val playingList = mutableMapOf<Long, Boolean>()
-
     private val expandedList = hashMapOf<Long, Boolean>()
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordItemViewHolder {
         return ItemWordRvBinding
@@ -23,7 +23,12 @@ class WordListAdapter : ListAdapter<WordRV, WordItemViewHolder>(WordListAdapterD
 
     override fun onBindViewHolder(holder: WordItemViewHolder, position: Int) {
         val word = getItem(position)
+        handleLoadNewWords?.onLoadNewWords(position)
         holder.bind(word, onClickListener)
+    }
+
+    interface HandleLoadNewWords {
+        fun onLoadNewWords(position: Int)
     }
 
     interface OnClickListener {

@@ -5,41 +5,46 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <View
-            android:id="@+id/stroke"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/word_position_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/prev_next_exam_button"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
 
-        <TextView
-            android:id="@+id/word_position"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/shape_circle"
-            android:backgroundTint="@color/green"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="@id/stroke"
-            app:layout_constraintEnd_toEndOf="@id/stroke"
-            app:layout_constraintStart_toStartOf="@id/stroke"
-            app:layout_constraintTop_toTopOf="@id/stroke"
-            tools:text="1" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/word_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_circle"
+                android:backgroundTint="@color/green"
+                android:paddingHorizontal="5dp"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="123" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/word_position_dots"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:paddingTop="2dp"
             android:fontFamily="monospace"
-            android:includeFontPadding="false"
             android:text="......."
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="@+id/word_position"
-            app:layout_constraintStart_toEndOf="@+id/word_position"
-            app:layout_constraintTop_toTopOf="@+id/word_position" />
+
+            app:layout_constraintBottom_toBottomOf="@+id/word_position_container"
+            app:layout_constraintStart_toEndOf="@+id/word_position_container"
+            app:layout_constraintTop_toTopOf="@+id/word_position_container" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

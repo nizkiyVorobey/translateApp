@@ -17,9 +17,7 @@ import com.example.ttanslateapp.presentation.core.BindingInflater
 import com.example.ttanslateapp.util.getAppComponent
 import com.google.android.material.appbar.MaterialToolbar
 
-
 val reminderFrequencyList = listOf("вимкнути", "раз на день", "раз на 3 дні", "раз на 6 днів")
-
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override val bindingInflater: BindingInflater<FragmentSettingsBinding>

@@ -4,8 +4,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.example.ttanslateapp.presentation.TranslateApp
 import com.example.ttanslateapp.di.ApplicationComponent
+import com.example.ttanslateapp.presentation.TranslateApp
 import com.google.android.material.textfield.TextInputEditText
 
 /**
@@ -23,7 +23,11 @@ internal inline fun TextInputEditText.setOnTextChange(crossinline block: (p0: Ch
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
         override fun afterTextChanged(p0: Editable?) = Unit
 
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = block(p0)
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            if (rootView.hasFocus()) {
+                block(p0)
+            }
+        }
     })
 
 fun View.t(resourceId: Int) = this.context.getString(resourceId)
